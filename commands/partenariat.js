@@ -4,7 +4,7 @@ const dataFile = './data.json';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('partenariat')
+        .setName('partenariatall')
         .setDescription('Affiche le nombre de partenariats'),
   
 async execute(interaction) {

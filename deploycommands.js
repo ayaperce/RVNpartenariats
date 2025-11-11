@@ -6,14 +6,20 @@ const token = process.env.TOKEN;
 const clientId = process.env.IDBOT;
 const guildId = process.env.IDSERV;
 
-// Définir la commande
-const command = new SlashCommandBuilder()
+const commands = [new SlashCommandBuilder()
     .setName('partenariat')
-    .setDescription('Compte le nombre de partenariats');
+    .setDescription('Compte le nombre de partenariats')
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription('ID de l utilisateur dont vous souhaitez voir le nombre de partenariats actifs.')
+        .setRequired(true)
+    ),
 
-const commands = [command.toJSON()];
+    new SlashCommandBuilder()
+        .setName('partenariatall')
+        .setDescription('Affiche le nombre de partenariats'),
+    ].map(cmd => cmd.toJSON());
 
-// Déploiement sur le serveur (test)
 const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
@@ -23,7 +29,7 @@ const rest = new REST({ version: '10' }).setToken(token);
             Routes.applicationGuildCommands(clientId, guildId),
             { body: commands }
     );
-    console.log('✅ Commandes déployées avec succès !');
+    console.log(`✅ ${commands.length} commandes déployées avec succès !`);
 } catch (error) {
     console.error('❌ Erreur de déploiement :', error);
 }
