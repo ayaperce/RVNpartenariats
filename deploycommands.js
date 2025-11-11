@@ -18,6 +18,18 @@ const commands = [new SlashCommandBuilder()
     new SlashCommandBuilder()
         .setName('partenariatall')
         .setDescription('Affiche le nombre de partenariats'),
+
+    
+
+    new SlashCommandBuilder()
+    .setName('addpartenariat')
+    .setDescription('Ajouter un partenariat a un utilisateur déjà présent dans la DB')
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription(`ID de l'utilisateur à qui vous voulez ajouter un partenariat.`)
+        .setRequired(true)
+    ),
+    
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
