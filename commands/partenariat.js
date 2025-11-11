@@ -1,15 +1,18 @@
 const { SlashCommandBuilder } = require('discord.js');
-let i = 0;
+const fs = require('fs');
+const dataFile = './data.json';
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('partenariat')
-        .setDescription('Compte le nombre de partenariats'),
+        .setDescription('Affiche le nombre de partenariats'),
   
 async execute(interaction) {
     try {
-        i++;
-        await interaction.reply({ content: `Nombre de partenariats : ${i}`});
+        const rawData = fs.readFileSync(dataFile);
+        const data = JSON.parse(rawData);
+        fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+        await interaction.reply(`Nombre de partenariats : ${data.partenariats}`);
     } catch (error) {
         console.error(error);
         if (!interaction.replied) await interaction.reply('❌ Erreur lors de la réponse.');

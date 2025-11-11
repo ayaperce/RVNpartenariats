@@ -8,8 +8,8 @@ const guildId = process.env.IDSERV;
 
 // Définir la commande
 const command = new SlashCommandBuilder()
-  .setName('partenariat')
-  .setDescription('Compte le nombre de partenariats');
+    .setName('partenariat')
+    .setDescription('Compte le nombre de partenariats');
 
 const commands = [command.toJSON()];
 
@@ -17,14 +17,14 @@ const commands = [command.toJSON()];
 const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
-  try {
-    console.log('🔄 Déploiement des commandes...');
-    await rest.put(
-      Routes.applicationGuildCommands(clientId, guildId),
-      { body: commands }
+    try {
+        console.log('🔄 Déploiement des commandes...');
+        await rest.put(
+            Routes.applicationGuildCommands(clientId, guildId),
+            { body: commands }
     );
     console.log('✅ Commandes déployées avec succès !');
-  } catch (error) {
+} catch (error) {
     console.error('❌ Erreur de déploiement :', error);
-  }
+}
 })();
