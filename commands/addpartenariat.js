@@ -32,4 +32,4 @@ async execute(interaction){
         content : `l'utilisateur ${ID_user} a maintenant ${partenariatuser} partenariats actifs.`
     });
 }
-} 
+}
