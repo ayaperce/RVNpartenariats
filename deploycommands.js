@@ -39,6 +39,15 @@ const commands = [new SlashCommandBuilder()
         .setRequired(true)
     ),
 
+    new SlashCommandBuilder()
+    .setName('wl')
+    .setDescription('Wl un utilisateur.')
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription(`ID de l'utilisateur à qui vous voulez ajouter à la whitelist.`)
+        .setRequired(true)
+    ),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
