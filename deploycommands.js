@@ -57,6 +57,11 @@ const commands = [new SlashCommandBuilder()
         .setRequired(true)
     ),
 
+    new SlashCommandBuilder()
+    .setName('resetall')
+    .setDescription('Reset la db de partenaires ainsi que le nombre de partenariats'),
+    
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);

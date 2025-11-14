@@ -2,6 +2,8 @@ const {SlashCommandBuilder} = require('discord.js');
 const fs = require('fs');
 const { execute } = require('./partenariat');
 const dataFile = './data.json';
+const { createEmbed } = require('../utils/embed.js');
+
 
 module.exports={
     data : new SlashCommandBuilder()
@@ -25,8 +27,11 @@ async execute(interaction){
 
     const partenariatuser = parsedata.utilisateurs[ID_user].points;
 
-    await interaction.reply({
-        content : `l'utilisateur ${ID_user} a ${partenariatuser} partenariats actifs.`
-    });
+    const embed = createEmbed({
+            title: 'Partenariats',
+            description: `l'utilisateur ${ID_user} a ${partenariatuser} partenariats actifs.`,
+            type : 'success'
+        });
+        await interaction.reply({ embeds: [embed] });
 }
 }

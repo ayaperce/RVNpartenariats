@@ -2,6 +2,8 @@ const {SlashCommandBuilder} = require('discord.js');
 const fs = require('fs');
 const { execute } = require('./partenariat');
 const dataFile = './data.json';
+const { createEmbed } = require('../utils/embed.js');
+
 
 module.exports={
     data : new SlashCommandBuilder()
@@ -19,7 +21,12 @@ async execute(interaction){
     const parsedata = JSON.parse(readdata);
 
     if (!parsedata.utilisateurs[ID_user]){
-        await interaction.reply(`l'utilisateur avec l'id ${ID_user} n'est pas enregistrer dans la DB`);
+            const embed = createEmbed({
+            title: 'Partenariats',
+            description: `l'utilisateur avec l'id ${ID_user} n'est pas enregistrer dans la DB`,
+            type : 'error'
+        });
+        await interaction.reply({ embeds: [embed] });
         return;
     }
 
@@ -28,8 +35,11 @@ async execute(interaction){
     fs.writeFileSync(dataFile, JSON.stringify(parsedata, null, 2));
     const partenariatuser = parsedata.utilisateurs[ID_user].points;
     
-    await interaction.reply({
-        content : `l'utilisateur ${ID_user} a maintenant ${partenariatuser} partenariats actifs.`
+    const embed = createEmbed({
+        title: 'Partenariats',
+        description: `l'utilisateur ${ID_user} a maintenant ${partenariatuser} partenariats actifs.`,
+        type : 'success'
     });
+    await interaction.reply({ embeds: [embed] });
 }
 }

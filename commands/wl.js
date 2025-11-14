@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const permFile = './perm.json';
+const { createEmbed } = require('../utils/embed.js');
 
 module.exports ={
     data : new SlashCommandBuilder()
@@ -22,21 +23,35 @@ async execute(interaction){
 
 
     if (!isOwner){
-        await interaction.reply(`Vous n'êtes pas owner`);
+        
+        const embed = createEmbed({
+            title: 'Partenariats',
+            description: `Vous n'êtes pas owner`,
+            type : 'error'
+        });
+        await interaction.reply({embeds : [embed]});
         return;
     }
         
     else if (parseperm.userwl[ID_user]){
-        await interaction.reply(`l'utilisateur avec l'id ${ID_user} est déjà enregistrer dans la DB des whitelist.`);
+        const embed = createEmbed({
+            title: 'Partenariats',
+            description: `l'utilisateur avec l'id ${ID_user} est déjà enregistrer dans la DB des whitelist.`,
+            type : 'warning'
+        });
+        await interaction.reply({embeds : [embed]});
         return;
     }
 
     parseperm.userwl.push(ID_user);
     parseperm.wl++;
     fs.writeFileSync(permFile, JSON.stringify(parseperm, null, 2));
-        
-    await interaction.reply({
-        content : `L'utilisateur a bien été whitelist.`
-    });
+    
+    const embed = createEmbed({
+            title: 'Partenariats',
+            description: `L'utilisateur a bien été whitelist.`,
+            type : 'success'
+        });
+    await interaction.reply({embeds : [embed]});
 }
 }

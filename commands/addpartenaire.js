@@ -3,6 +3,8 @@ const fs = require('fs');
 const { execute } = require('./partenariat');
 const dataFile = './data.json';
 const permFile = './perm.json';
+const { createEmbed } = require('../utils/embed.js');
+
 
 module.exports={
     data : new SlashCommandBuilder()
@@ -26,20 +28,33 @@ async execute(interaction){
 
 
     if (!isWl && !isOwner){
-        await interaction.reply(`Vous n'êtes pas wl`);
+            const embed = createEmbed({
+            title: 'Partenariats',
+            description: `Vous n'êtes pas wl`,
+            type : 'error'
+        });
+        await interaction.reply({ embeds: [embed] });
         return;
     }
         
     else if (parsedata.utilisateurs[ID_user]){
-        await interaction.reply(`l'utilisateur avec l'id ${ID_user} est déjà enregistrer dans la DB.`);
+            const embed = createEmbed({
+            title: 'Partenariats',
+            description: `l'utilisateur avec l'id ${ID_user} est déjà enregistrer dans la DB.`,
+            type : 'warning'
+        });
+        await interaction.reply({ embeds: [embed] });
         return;
     }
 
-    parsedata.utilisateurs[ID_user] = { points: 0 };
+    parsedata.utilisateurs[ID_user] = { points: 1 };
     fs.writeFileSync(dataFile, JSON.stringify(parsedata, null, 2));
         
-    await interaction.reply({
-        content : `L'utilisateur a bien été ajouter à la DB des partenaires.`
+    const embed = createEmbed({
+        title: 'Partenariats',
+        description: `L'utilisateur a bien été ajouter à la DB des partenaires.`,
+        type : 'success'
     });
+    await interaction.reply({ embeds: [embed] });
 }
 }
