@@ -60,7 +60,10 @@ const commands = [new SlashCommandBuilder()
     new SlashCommandBuilder()
     .setName('resetall')
     .setDescription('Reset la db de partenaires ainsi que le nombre de partenariats'),
-    
+
+    new SlashCommandBuilder()
+    .setName('listpartenariats')
+    .setDescription('Lister les utilisateurs partenaires avec leur nombre de partenariats actifs.'),
 
     ].map(cmd => cmd.toJSON());
 
