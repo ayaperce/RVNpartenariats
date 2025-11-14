@@ -47,6 +47,8 @@ async execute(interaction){
         return;
     }
 
+    parsedata.partenariats++;
+    parsedata.partenaires++;
     parsedata.utilisateurs[ID_user] = { points: 1 };
     fs.writeFileSync(dataFile, JSON.stringify(parsedata, null, 2));
         
