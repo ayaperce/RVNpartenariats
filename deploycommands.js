@@ -120,6 +120,18 @@ const commands = [new SlashCommandBuilder()
     .setName('removenull')
     .setDescription(`Supprimer les partenaires qui ont 0 points dans la DB des partenaires.`),
 
+    new SlashCommandBuilder()
+    .setName('listowner')
+    .setDescription('Lister les utilisateurs ayant été ajoutés comme owners.'),
+
+    new SlashCommandBuilder()
+    .setName('listwl')
+    .setDescription('Lister les utilisateurs ayant été ajoutés à la whitelist.'),
+
+    new SlashCommandBuilder()
+    .setName('listbuyer')
+    .setDescription('Lister les utilisateurs ayant été ajoutés à la DB buyer.'),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);

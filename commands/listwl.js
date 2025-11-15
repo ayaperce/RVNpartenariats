@@ -6,8 +6,8 @@ const { createEmbed } = require('../utils/embed.js');
 
 module.exports={
     data : new SlashCommandBuilder()
-    .setName('listowner')
-    .setDescription('Lister les utilisateurs ayant été ajoutés comme owners.'),
+    .setName('listwl')
+    .setDescription('Lister les utilisateurs ayant été ajoutés à la whitelist.'),
 
 async execute(interaction){
     const usercmd = interaction.user.id;
@@ -15,7 +15,7 @@ async execute(interaction){
     const parseperm = JSON.parse(readperm);
     const isWl = parseperm.userwl.includes(usercmd);
     const isOwner = parseperm.userown.includes(usercmd);
-    const own = parseperm.userown;
+    const wl = parseperm.userwl;
 
     if (!isOwner && !isWl){
             const embed = createEmbed({
@@ -27,20 +27,20 @@ async execute(interaction){
         return;
     }
 
-    if (!own || Object.keys(own).length === 0){
+    if (!wl || Object.keys(wl).length === 0){
         const embed = createEmbed({
             title: 'Partenariats',
-            description: `Il n'y a pas d'utilisateurs dans la BD des owners.`,
+            description: `Il n'y a pas d'utilisateurs dans la BD des whitelist.`,
             type : 'warning',
         })
         await interaction.reply({ embeds: [embed] });
         return;
     }
 
-    let description = own.map(id => `<@${id}>`).join('\n');
+    let description = wl.map(id => `<@${id}>`).join('\n');
 
         const embed = createEmbed({
-            title: 'Liste des Owners',
+            title: 'Liste des Whitelist',
             description,
             type: 'info'
         });
