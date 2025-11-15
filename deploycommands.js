@@ -89,6 +89,15 @@ const commands = [new SlashCommandBuilder()
             .setRequired(true)
     ),
 
+    new SlashCommandBuilder()
+    .setName('unwl')
+    .setDescription('Enlever de la whitelist un utilisateur.')
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription(`ID de l'utilisateur à qui vous voulez enlever la whitelist.`)
+        .setRequired(true)
+    ),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
