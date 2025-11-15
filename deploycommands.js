@@ -132,6 +132,10 @@ const commands = [new SlashCommandBuilder()
     .setName('listbuyer')
     .setDescription('Lister les utilisateurs ayant été ajoutés à la DB buyer.'),
 
+    new SlashCommandBuilder()
+    .setName('help')
+    .setDescription('Afficher la liste des commandes disponibles.'),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
