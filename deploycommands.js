@@ -65,6 +65,15 @@ const commands = [new SlashCommandBuilder()
     .setName('listpartenariats')
     .setDescription('Lister les utilisateurs partenaires avec leur nombre de partenariats actifs.'),
 
+    new SlashCommandBuilder()
+    .setName('resetallpoints')
+    .setDescription(`Reset tous les points d'un utilisateur sans le supprimer de la DB.`)
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription('ID de l utilisateur dont vous souhaitez voir le nombre de partenariats actifs.')
+        .setRequired(true)
+    ),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);

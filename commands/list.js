@@ -45,7 +45,7 @@ async execute(interaction){
     let description = "";
 
         for (let [userId, info] of sorted) {
-            description += `👤 <@${userId}> — **${info.points} points**\n`;
+            description += `<@${userId}> — **${info.points} points**\n`;
         }
 
         const embed = createEmbed({
