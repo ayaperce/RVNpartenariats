@@ -1,10 +1,7 @@
 {
-  "partenaires": 2,
-  "partenariats": 2,
+  "partenaires": 1,
+  "partenariats": 1,
   "utilisateurs": {
-    "1333047644796358657": {
-      "points": 1
-    },
     "1427664878167920821": {
       "points": 1
     }

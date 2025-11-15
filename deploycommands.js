@@ -107,6 +107,15 @@ const commands = [new SlashCommandBuilder()
         .setRequired(true)
     ),
 
+    new SlashCommandBuilder()
+    .setName('removepartenaire')
+    .setDescription(`Supprimer un partenaire de la DB des partenaires.`)
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription(`ID de l'utilisateur a supprimer de la db des partenaires.`)
+        .setRequired(true)
+    ),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
