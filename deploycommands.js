@@ -74,6 +74,21 @@ const commands = [new SlashCommandBuilder()
         .setRequired(true)
     ),
 
+    new SlashCommandBuilder()
+    .setName('resetpoints')
+    .setDescription(`Reset un nombre points d'un utilisateur sans le supprimer de la DB.`)
+    .addStringOption(option =>
+        option.setName('id')
+        .setDescription('ID de l utilisateur dont vous souhaitez supprimer des points.')
+        .setRequired(true)
+    )
+    .addIntegerOption(option => 
+        option
+            .setName('nbpoints')
+            .setDescription('Nombre de points que tu souhaite enlever')
+            .setRequired(true)
+    ),
+
     ].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);

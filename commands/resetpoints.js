@@ -7,12 +7,18 @@ const { createEmbed } = require('../utils/embed.js');
 
 module.exports={
     data : new SlashCommandBuilder()
-    .setName('resetallpoints')
-    .setDescription(`Reset tous les points d'un utilisateur sans le supprimer de la DB.`)
+    .setName('resetpoints')
+    .setDescription(`Reset un nombre points d'un utilisateur sans le supprimer de la DB.`)
     .addStringOption(option =>
         option.setName('id')
-        .setDescription('Id de lutilisateur dont vous voulez supprimer tous les points')
+        .setDescription('ID de l utilisateur dont vous souhaitez supprimer des points.')
         .setRequired(true)
+    )
+    .addIntegerOption(option => 
+        option
+            .setName('nbpoints')
+            .setDescription('Nombre de points que tu souhaite enlever')
+            .setRequired(true)
     ),
 
 async execute(interaction){
@@ -24,6 +30,8 @@ async execute(interaction){
     const isOwner = parseperm.userown.includes(usercmd);
     const isWl = parseperm.userwl.includes(usercmd);
     const userID = interaction.options.getString('id');
+    const points = parsedata.utilisateurs[userID].points;
+    const nbpoints = interaction.options.getInteger('nbpoints');
 
     if (!isOwner && !isWl){
         const embed = createEmbed({
@@ -45,14 +53,24 @@ async execute(interaction){
         return;
     }
 
-    const points = parsedata.utilisateurs[userID].points;
-    parsedata.partenariats = parsedata.partenariats - points;
-    parsedata.utilisateurs[userID].points = 0;
+    else if (points < nbpoints){
+        const embed = createEmbed({
+            title: 'Partenariats',
+            description: `Le nombre de points a supprimer est trop élever par rapport au nombre de points qu'a actuellement ce partenaire.`,
+            type : 'warning'
+        });
+        await interaction.reply({embeds : [embed]});
+        return;
+    }
+
+    parsedata.partenariats = parsedata.partenariats - nbpoints;
+    const nvxpoints = parsedata.utilisateurs[userID].points - nbpoints;
+    parsedata.utilisateurs[userID].points = nvxpoints;
     fs.writeFileSync(dataFile, JSON.stringify(parsedata, null, 2));
     
     const embed = createEmbed({
         title: 'Partenariats',
-        description: `tous les points de l'utilisateurs sont maintenant redescendu à 0`,
+        description: `Les points de l'utilisateurs sont maintenant élever à ${nvxpoints}`,
         type : 'success'
     });
     await interaction.reply({embeds : [embed]});
