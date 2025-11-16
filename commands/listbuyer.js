@@ -40,7 +40,7 @@ async execute(interaction){
     let description = buyer.map(id => `<@${id}>`).join('\n');
 
         const embed = createEmbed({
-            title: 'Liste des Whitelist',
+            title: 'Liste des Buyers',
             description,
             type: 'info'
         });
